@@ -1,0 +1,25 @@
+# === Entorno de Python ===
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+instance/
+.env
+.env.*
+
+# === Configuración local ===
+config.py
+*.log
+
+
+# === Archivos de IDE ===
+.vscode/
+.idea/
+
+# === Archivos de compilación ===
+*.egg-info/
+dist/
+build/
