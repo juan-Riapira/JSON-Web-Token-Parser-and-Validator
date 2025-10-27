@@ -14,22 +14,22 @@ def semantic_analysis(header: dict, payload: dict):
       y su algoritmo de firma tengan sentido.
 
     Validaciones que realiza:
-      1️⃣ Algoritmo (alg) soportado: "HS256" o "HS384"
-      2️⃣ Campo de expiración (exp): que no esté vencido
-      3️⃣ Campo de validez futura (nbf): que el token no sea válido antes de tiempo
-      4️⃣ Campo de emisión (iat): que tenga formato correcto
-      5️⃣ Coherencia general de los tiempos
+      1Algoritmo (alg) soportado: "HS256" o "HS384"
+      2 Campo de expiración (exp): que no esté vencido
+      3Campo de validez futura (nbf): que el token no sea válido antes de tiempo
+      4Campo de emisión (iat): que tenga formato correcto
+      5 Coherencia general de los tiempos
     """
 
     errors = []  # Lista para registrar los errores encontrados
     now = datetime.now(timezone.utc).timestamp()  # Tiempo actual (UTC)
     algorithm = header.get("alg")
 
-    # 1️⃣ Verificar algoritmo soportado
+    # Verificar algoritmo soportado
     if algorithm not in ["HS256", "HS384"]:
         errors.append(f"Algoritmo no soportado: {algorithm}")
 
-    # 2️⃣ Verificar expiración (exp)
+    # Verificar expiración (exp)
     exp = payload.get("exp")
     if exp is not None:
         if not isinstance(exp, (int, float)):
@@ -37,7 +37,7 @@ def semantic_analysis(header: dict, payload: dict):
         elif now > exp:
             errors.append("El token ha expirado (exp).")
 
-    # 3️⃣ Verificar "not before" (nbf)
+    # Verificar "not before" (nbf)
     nbf = payload.get("nbf")
     if nbf is not None:
         if not isinstance(nbf, (int, float)):
@@ -45,7 +45,7 @@ def semantic_analysis(header: dict, payload: dict):
         elif now < nbf:
             errors.append("El token aún no es válido (nbf en el futuro).")
 
-    # 4️⃣ Verificar "issued at" (iat)
+    # Verificar "issued at" (iat)
     iat = payload.get("iat")
     if iat is not None:
         if not isinstance(iat, (int, float)):
@@ -53,7 +53,7 @@ def semantic_analysis(header: dict, payload: dict):
         elif iat > now:
             errors.append("El campo 'iat' indica una fecha futura (no válido).")
 
-    # ✅ Resultado final del análisis
+    # Resultado final del análisis
     valid = len(errors) == 0
 
     return {

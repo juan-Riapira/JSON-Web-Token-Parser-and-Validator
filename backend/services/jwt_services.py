@@ -10,17 +10,17 @@ def analyze_token(token: str):
     Ejecuta los tres análisis y guarda el token en MongoDB.
     Devuelve solo el resultado semántico.
     """
-    # 1️⃣ Léxico
+    #  Léxico
     lex = lexical_analysis(token)
     if not lex["valid"]:
         return {"phase": "lexical", "valid": False, "error": lex["error"]}
 
-    # 2️⃣ Sintáctico
+    # Sintáctico
     syn = syntactic_analysis(lex["parts"])
     if not syn["valid"]:
         return {"phase": "syntactic", "valid": False, "error": syn["error"]}
 
-    # 3️⃣ Semántico
+    # semántico
     sem = semantic_analysis(syn["header"], syn["payload"])
 
     # Guardar solo el token

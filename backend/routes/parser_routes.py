@@ -16,7 +16,7 @@ def analyze_syntactic():
     if not token:
         return jsonify({"valid": False, "error": "No se recibió ningún token"}), 400
 
-    # 1️⃣ Análisis léxico primero
+    # Análisis léxico primero
     lex_result = lexical_analysis(token)
     if not lex_result.get("valid"):
         return jsonify({
@@ -25,6 +25,6 @@ def analyze_syntactic():
             "error": lex_result.get("error")
         }), 400
 
-    # 2️⃣ Análisis sintáctico
+    # Análisis sintáctico
     syn_result = syntactic_analysis(lex_result["parts"])
     return jsonify(syn_result), (200 if syn_result["valid"] else 400)

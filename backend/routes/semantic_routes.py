@@ -23,20 +23,20 @@ def analyze_semantic():
     if not token:
         return jsonify({"valid": False, "error": "No se recibió ningún token"}), 400
 
-    # 1️⃣ Léxico
+    #  Léxico
     lex_result = lexical_analysis(token)
     if not lex_result.get("valid"):
         return jsonify(lex_result), 400
 
-    # 2️⃣ Sintáctico
+    # Sintáctico
     syn_result = syntactic_analysis(lex_result["parts"])
     if not syn_result.get("valid"):
         return jsonify(syn_result), 400
 
-    # 3️⃣ Semántico
+    # 3Semántico
     sem_result = semantic_analysis(syn_result["header"], syn_result["payload"])
 
-    # ✅ Guardar el token en MongoDB
+    # Guardar el token en MongoDB
     collection.insert_one({
         "token": token,
         "fecha_guardado": datetime.utcnow()
